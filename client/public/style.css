@@ -1,0 +1,90 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Poppins", sans-serif;
+	box-sizing: border-box;
+}
+
+
+
+.card {
+	opacity:100%;
+	max-width: 470px;
+	background:#708090;
+	color: #fff;
+	margin: 100px auto 0;
+	border-radius: 20px;
+	padding: 40px;
+	text-align: center;
+}
+
+
+
+.search {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.search input {
+	border: 0;
+	outline: 0;
+	background: #f8f8ff;
+	color: #555;
+	opacity: 70%;
+	padding: 10px 25px;
+	height: 50px;
+	border-radius: 30px;
+	margin-right: 10px;
+
+	font-size: 18px;
+}
+
+.favBtn {
+	outline: none;
+	background: #f8f8ff;
+	border: 0;
+	outline: 0;
+	color: #555;
+
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	margin-right: 10px;
+	margin-left: 10px;
+	font-size: 18px;
+} 
+
+
+/* Favourite Button */
+ img {
+	opacity: 50%;
+	align-items: center;
+	width: 50%;
+	height: 50%;
+	vertical-align: middle;
+	object-fit: fill;
+} 
+
+.icon {
+	width: 200px;
+}
+
+#searchField {
+	z-index: 1;
+}
+
+
+
+/* for All details*/
+
+.details {
+	color: #f8f8ff;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 20px;
+	padding: 0 20px;
+	font-size: 18px;
+}
