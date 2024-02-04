@@ -136,6 +136,7 @@ function createFavButton() {
   return favBtn;
 }
 
+
 function createFavIMG() {
   const favParent = document.getElementById("favButton");
   const heartIMG = document.createElement("img");
