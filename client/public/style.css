@@ -30,7 +30,7 @@
 .search input {
 	border: 0;
 	outline: 0;
-	background: #f8f8ff;
+	/* background: #f8f8ff; */
 	color: #555;
 	opacity: 70%;
 	padding: 10px 25px;
@@ -58,7 +58,7 @@
 
 
 /* Favourite Button */
- img {
+img {
 	opacity: 50%;
 	align-items: center;
 	width: 50%;
@@ -87,4 +87,8 @@
 	margin-top: 20px;
 	padding: 0 20px;
 	font-size: 18px;
+}
+
+#humidity {
+	margin-top: 10px;
 }

@@ -6,14 +6,13 @@ const prexelsAPI = `SYWzkiLZEo88KYy5QQCDqVTJzOv1nrVqY4zVKcnJbbhmNneVSKWCWIpw`;
 const apiPexlUrl = "https://api.pexels.com/v1/search";
 const apiPexlKey = "pI4YpniccB06CT3ltrsyZupv6InhW8jh3YSLCAt4dRlmiz2cOBmclk7P";
 
-console.log("HEllo world");
 let rootE;
 let cardE = createCard();
 let searchDiv = createSearchDiv();
 let inputField = createInputField();
 let favBtn = createFavButton();
 let favIMG = createFavIMG();
-let favList = createFavList();
+// let favList = createFavList();
 let weatherDataDiv = createWeatherDataDiv();
 let dataList;
 let inputCityValue = "";
@@ -22,24 +21,29 @@ let favArray = [];
 
 const city = getCityNameFromInputField();
 
-const cardIMG = document.createElement("img");
-cardIMG.id = "cardIMG";
-rootE.appendChild(cardIMG);
+const imgDiv = document.createElement("div");
+imgDiv.id = "imgDiv";
+rootE.appendChild(imgDiv);
 
 async function fetchImageData(city) {
+  console.log(city);
   try {
     const response = await fetch(`${apiPexlUrl}?query=${city}`, {
       headers: { Authorization: apiPexlKey },
     });
-    console.log("image fetch successful");
     const imgData = await response.json();
     if (!response.ok) {
-      console.log("image fetch not successful");
       return;
     }
     if (response.ok) {
-      console.log(`image api data for ${city}: `, imgData);
-      displayImage(imgData);
+      console.log(`response ok, image api data for ${city}: `, imgData);
+
+      console.log(imgData.photos.length);
+      if (imgData.photos.length === 0) {
+        displayAlternativeBG();
+      } else {
+        displayImage(imgData);
+      }
     }
   } catch (error) {
     console.log("ERROR: ", error);
@@ -48,7 +52,7 @@ async function fetchImageData(city) {
 }
 
 function getCityNameFromInputField() {
-  const weatherDiv = document.getElementById("weatherDiv");
+  const weatherDiv = document.getElementById("weatherDiv"); //to empty the weatherData shown
   const inputField = document.getElementById("input");
 
   inputField.oninput = () => {
@@ -73,6 +77,7 @@ async function fetchCityForSuggestion(cityLetters) {
   } catch (error) {
     console.log(error.message);
   }
+  //ClickFavButton(inputCityValue)
 
   if (
     cityArray.includes(inputCityValue) ||
@@ -136,27 +141,31 @@ function createFavIMG() {
   const heartIMG = document.createElement("img");
   heartIMG.id = "heart";
   heartIMG.classList.add("heartClass");
-  heartIMG.src = "Images/herz.png";
+  heartIMG.src = "client/Images/herz.png";
   favParent.appendChild(heartIMG);
 }
 
-function createFavList(favArray) {
-  const searchParent = document.getElementById("searchField");
-  let favListDropdown = document.createElement("select");
+// function createFavList(favArray) {
+//   const searchParent = document.getElementById("searchField");
+//   let favListDropdown = document.createElement("select");
 
-  favListDropdown.addEventListener("change", (e) => {
-    console.log("Dropdown change");
-    getWeatherData(e.target.value);
-  });
-  searchParent.appendChild(favListDropdown);
+//   favListDropdown.addEventListener("change", (e) => {
+//     console.log("Dropdown change");
+//     getWeatherData(e.target.value);
+//   });
+//   searchParent.appendChild(favListDropdown);
 
-  //TODO: create the favButton
-  // favArray.forEach(city => {
-  //   let opt = document.createElement("option")
-  //   opt.innerHTML = city
+//  // TODO: create the favButton
+//   // favArray.forEach(city => {
 
-  // })
-}
+//   //   let opt = document.createElement("option")
+//   //   opt.innerHTML = city
+// 	// 	favListDropdown.appendChild(opt);
+
+//   // })
+// 	searchParent.appendChild(favListDropdown);
+
+// }
 
 function showWeatherData(data) {
   //WeatherPictogram
@@ -228,18 +237,18 @@ function createDetailsDiv(humidity, wind) {
   weatherE.appendChild(detailDiv);
 
   //Left coloumn Humidity
-  const LeftDiv = document.createElement("div");
-  LeftDiv.classList.add = "left";
-  LeftDiv.id = "left";
-  detailDiv.appendChild(LeftDiv);
+  const humidityDiv = document.createElement("div");
+  humidityDiv.classList.add = "left";
+  humidityDiv.id = "left";
+  detailDiv.appendChild(humidityDiv);
 
   //image
   const detailE = document.getElementById("left");
-  const colLeftIMG = document.createElement("img");
-  colLeftIMG.classList.add = "colLeft";
-  colLeftIMG.id = "coloumnLeft";
-  colLeftIMG.src = "Images/humidity.png";
-  detailE.appendChild(colLeftIMG);
+  const humidityImg = document.createElement("img");
+  humidityImg.classList.add = "colLeft";
+  humidityImg.id = "coloumnLeft";
+  humidityImg.src = "client/Images/humidity.png";
+  detailE.appendChild(humidityImg);
 
   //number
   const colLeftDIV = document.createElement("div");
@@ -258,7 +267,7 @@ function createDetailsDiv(humidity, wind) {
   const colRightIMG = document.createElement("img");
   colRightIMG.classList.add = "colRight";
   colRightIMG.id = "coloumRight";
-  colRightIMG.src = "Images/wind.png";
+  colRightIMG.src = "client/Images/wind.png";
   detailRight.appendChild(colRightIMG);
 
   //number
@@ -297,20 +306,64 @@ function createTempHeading(currentTemp) {
 // ----------------------------------------------------------
 
 function displayImage(imgData) {
-  let imgUrl = imgData.photos[0].src.large;
-  let imgElement = document.createElement("img");
-  imgElement.src = imgUrl;
-  cardIMG.src = `${imgUrl}`;
-  cardIMG.style.backgroundSize = "cover";
-  cardIMG.style.position = "absolute";
-  cardIMG.style.left = "0";
-  cardIMG.style.top = "0";
-  cardIMG.style.width = "100%";
-  cardIMG.style.height = "100%";
-  cardIMG.style.zIndex = "-1";
+  console.log("inside display img");
+
+  const rootE = document.getElementById("root");
+  console.log(rootE);
+  rootE.removeAttribute("style");
+
+  const hasImgChild = imgDiv.firstChild && imgDiv.firstChild.tagName === "IMG";
+  const image = document.getElementById("cardIMG");
+  if (hasImgChild) {
+    console.log("imgDiv has an img child");
+    imgDiv.removeChild(image);
+
+    const cardIMG = document.createElement("img");
+    cardIMG.id = "cardIMG";
+    let imgUrl = imgData.photos[0].src.large;
+    console.log(imgUrl);
+    let imgElement = document.createElement("img");
+    imgElement.src = imgUrl;
+    cardIMG.src = `${imgUrl}`;
+    cardIMG.style.backgroundSize = "cover";
+    cardIMG.style.position = "absolute";
+    cardIMG.style.left = "0";
+    cardIMG.style.top = "0";
+    cardIMG.style.width = "100%";
+    cardIMG.style.height = "100%";
+    cardIMG.style.zIndex = "-1";
+    imgDiv.appendChild(cardIMG);
+  } else {
+    const cardIMG = document.createElement("img");
+    cardIMG.id = "cardIMG";
+    let imgUrl = imgData.photos[0].src.large;
+    console.log(imgUrl);
+    let imgElement = document.createElement("img");
+    imgElement.src = imgUrl;
+    cardIMG.src = `${imgUrl}`;
+    cardIMG.style.backgroundSize = "cover";
+    cardIMG.style.position = "absolute";
+    cardIMG.style.left = "0";
+    cardIMG.style.top = "0";
+    cardIMG.style.width = "100%";
+    cardIMG.style.height = "100%";
+    cardIMG.style.zIndex = "-1";
+    imgDiv.appendChild(cardIMG);
+  }
+}
+
+function displayAlternativeBG() {
+  console.log("function alternative bg");
+  const rootE = document.getElementById("root");
+  rootE.style.backgroundColor = "#555";
+
+  const img = document.getElementById("cardIMG");
+  console.log(img);
+  img.remove();
 }
 
 favBtn.onclick = () => {
+  console.log(inputCityValue);
   const chosenCity = inputCityValue.split(",")[0];
   console.log(chosenCity);
   if (!favArray.includes(chosenCity)) {
@@ -320,4 +373,34 @@ favBtn.onclick = () => {
     favArray = favArray.filter((elem) => elem != chosenCity);
     console.log("favArray: ", favArray);
   }
+  console.log(favArray);
+  createFavList(favArray);
 };
+
+
+const menu = document.createElement("select");
+
+menu.addEventListener("change", (e) => {
+	console.log("Dropdown change");
+	weatherDiv.innerHTML = "";
+	getWeatherData(e.target.value);
+});
+
+
+function createFavList(favArray) {
+  console.log(favArray);
+  const weatherDiv = document.getElementById("weatherDiv");
+
+  const searchField = document.getElementById("searchField");
+ 
+
+  if (favArray !== undefined) {
+    favArray.forEach((city) => {
+      let opt = document.createElement("option");
+      opt.value = city; // Set the value attribute of the option
+      opt.textContent = city; // Set the text content of the option
+      menu.appendChild(opt); // Append the option to the select element
+    });
+    searchField.appendChild(menu);
+  }
+}

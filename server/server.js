@@ -34,6 +34,16 @@ server.get("/style.css", (req, res) => {
   res.sendFile(path.join(__dirname + "../../client/public/style.css"));
 });
 
+server.get("/client/Images/herz.png", (req, res) => {
+  res.sendFile(path.join(__dirname + "../../client/Images/herz.png"));
+});
+server.get("/client/Images/humidity.png", (req, res) => {
+  res.sendFile(path.join(__dirname + "../../client/Images/humidity.png"));
+});
+server.get("/client/Images/wind.png", (req, res) => {
+  res.sendFile(path.join(__dirname + "../../client/Images/wind.png"));
+});
+
 server.listen(PORT, () => {
   console.log(`server is listening on Port http://127.0.0.1:${PORT}/`);
 })
