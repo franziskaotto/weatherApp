@@ -146,27 +146,7 @@ function createFavIMG() {
   favParent.appendChild(heartIMG);
 }
 
-// function createFavList(favArray) {
-//   const searchParent = document.getElementById("searchField");
-//   let favListDropdown = document.createElement("select");
 
-//   favListDropdown.addEventListener("change", (e) => {
-//     console.log("Dropdown change");
-//     getWeatherData(e.target.value);
-//   });
-//   searchParent.appendChild(favListDropdown);
-
-//  // TODO: create the favButton
-//   // favArray.forEach(city => {
-
-//   //   let opt = document.createElement("option")
-//   //   opt.innerHTML = city
-// 	// 	favListDropdown.appendChild(opt);
-
-//   // })
-// 	searchParent.appendChild(favListDropdown);
-
-// }
 
 function showWeatherData(data) {
   //WeatherPictogram
