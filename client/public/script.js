@@ -283,6 +283,13 @@ function createTempHeading(currentTemp) {
   tempH1.innerHTML = currentTemp + "°C";
   weatherE.appendChild(tempH1);
 }
+// function createTempHeading(currentTemp) {
+//   const weatherE = document.getElementById("weatherDiv");
+//   const tempH1 = document.createElement("h1");
+//   tempH1.classList.add("temp");
+//   tempH1.innerHTML = currentTemp + "°C";
+//   weatherE.appendChild(tempH1);
+// }
 
 // ----------------------------------------------------------
 
